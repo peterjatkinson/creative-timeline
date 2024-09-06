@@ -10,7 +10,7 @@ import img1960s from '../images/1960sad.webp';
 const timelineData = [
     {
         decade: '1960s',
-        title: 'The Birth of the Creative Revolution',
+        title: 'The birth of the creative revolution',
         description: 'The rise of creative-driven advertising, focusing on wit and storytelling.',
         keyEvent: 'Madison Avenue agencies changed the landscape by prioritizing creativity over hard-selling tactics.',
         iconicAd: 'Volkswagen\'s "Think Small" (1960)',
@@ -20,7 +20,7 @@ const timelineData = [
     },
     {
         decade: '1970s',
-        title: 'The Power of Branding',
+        title: 'The power of branding',
         description: 'A shift from selling products to building brand identities.',
         keyEvent: 'Brands began focusing on emotional connections and lifestyle imagery.',
         iconicAd: 'Coca-Cola\'s "I\'d Like to Buy the World a Coke" (1971)',
@@ -30,7 +30,7 @@ const timelineData = [
     },
     {
         decade: '1980s',
-        title: 'Big Budget, Big Ideas, and the Rise of TV Commercials',
+        title: 'Big budget, big ideas, and the rise of tv commercials',
         description: 'Television became the dominant medium for advertising.',
         keyEvent: 'Increased ad budgets led to more dramatic, story-driven TV commercials.',
         iconicAd: 'Apple\'s "1984" Super Bowl Ad (1984)',
@@ -39,7 +39,7 @@ const timelineData = [
     },
     {
         decade: '1990s',
-        title: 'Digital Beginnings and Shock Advertising',
+        title: 'Digital beginnings and shock advertising',
         description: 'The rise of early digital ads and controversial "shock" advertising.',
         keyEvent: 'The beginning of digital advertising with the rise of the internet.',
         iconicAd: 'Benetton\'s "Unhate" Campaign',
@@ -48,7 +48,7 @@ const timelineData = [
     },
     {
         decade: '2000s',
-        title: 'The Rise of Digital and Guerrilla Marketing',
+        title: 'The rise of digital and guerrilla marketing',
         description: 'The explosion of digital marketing and guerrilla tactics.',
         keyEvent: 'Brands increasingly invested in online campaigns, viral marketing, and guerrilla strategies.',
         iconicAd: 'Burger King\'s "Subservient Chicken" (2004)',
@@ -57,7 +57,7 @@ const timelineData = [
     },
     {
         decade: '2010s',
-        title: 'Social Media, Influencers, and the Age of Authenticity',
+        title: 'Social media, influencers, and the age of authenticity',
         description: 'The dominance of social media and the rise of influencer marketing.',
         keyEvent: 'Brands started shifting budgets to social media platforms, using influencers to authentically connect with consumers.',
         iconicAd: 'Always\' "Like a Girl" Campaign (2014)',
@@ -163,11 +163,11 @@ const AdvertisingTimeline = () => {
                             <h3 className="text-2xl font-semibold text-gray-700">{currentEra.title}</h3>
                             <p className="text-gray-600">{currentEra.description}</p>
                             <div>
-                                <h4 className="text-xl font-semibold text-gray-700 mb-2">Key Event:</h4>
+                                <h4 className="text-xl font-semibold text-gray-700 mb-2">Key event:</h4>
                                 <p className="text-gray-600">{currentEra.keyEvent}</p>
                             </div>
                             <div>
-                                <h4 className="text-xl font-semibold text-gray-700 mb-2">Iconic Ad:</h4>
+                                <h4 className="text-xl font-semibold text-gray-700 mb-2">Iconic ad:</h4>
                                 <p className="text-gray-600">{currentEra.iconicAd}</p>
                             </div>
                             <div>
