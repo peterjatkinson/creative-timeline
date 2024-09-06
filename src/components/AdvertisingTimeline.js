@@ -1,76 +1,80 @@
 import React, { useState } from 'react';
 import { Brain, Layers, Wifi, Radio, Smartphone, Cpu, ChevronLeft, ChevronRight, X } from 'lucide-react';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faPenNib, faNetworkWired, faGlobe, faTv, faTag, faCamera, faRobot } from '@fortawesome/free-solid-svg-icons';
+
 //Images
 import img1960s from '../images/1960sad.webp';
 
 
 const timelineData = [
-  {
-    decade: '1960s',
-    title: 'The Birth of the Creative Revolution',
-    description: 'The rise of creative-driven advertising, focusing on wit and storytelling.',
-    keyEvent: 'Madison Avenue agencies changed the landscape by prioritizing creativity over hard-selling tactics.',
-    iconicAd: 'Volkswagen\'s "Think Small" (1960)',
-    impact: 'This minimalist ad revolutionized car advertising by emphasizing simplicity and irony.',
-    icon: Brain,
-    image: img1960s
-  },
-  {
-    decade: '1970s',
-    title: 'The Power of Branding',
-    description: 'A shift from selling products to building brand identities.',
-    keyEvent: 'Brands began focusing on emotional connections and lifestyle imagery.',
-    iconicAd: 'Coca-Cola\'s "I\'d Like to Buy the World a Coke" (1971)',
-    impact: 'This ad showcased a message of unity and peace, associating Coca-Cola with positive, uplifting emotions.',
-    icon: Layers,
-  },
-  {
-    decade: '1980s',
-    title: 'Big Budget, Big Ideas, and the Rise of TV Commercials',
-    description: 'Television became the dominant medium for advertising.',
-    keyEvent: 'Increased ad budgets led to more dramatic, story-driven TV commercials.',
-    iconicAd: 'Apple\'s "1984" Super Bowl Ad (1984)',
-    impact: 'Introduced the Macintosh computer and portrayed Apple as a rebel challenging the status quo.',
-    icon: Wifi,
-  },
-  {
-    decade: '1990s',
-    title: 'Digital Beginnings and Shock Advertising',
-    description: 'The rise of early digital ads and controversial "shock" advertising.',
-    keyEvent: 'The beginning of digital advertising with the rise of the internet.',
-    iconicAd: 'Benetton\'s "Unhate" Campaign',
-    impact: 'Benetton became known for its shocking ads that dealt with social issues, aiming to provoke conversations.',
-    icon: Radio,
-  },
-  {
-    decade: '2000s',
-    title: 'The Rise of Digital and Guerrilla Marketing',
-    description: 'The explosion of digital marketing and guerrilla tactics.',
-    keyEvent: 'Brands increasingly invested in online campaigns, viral marketing, and guerrilla strategies.',
-    iconicAd: 'Burger King\'s "Subservient Chicken" (2004)',
-    impact: 'This online campaign allowed users to "control" a chicken via a website, pioneering interactive and viral marketing.',
-    icon: Smartphone,
-  },
-  {
-    decade: '2010s',
-    title: 'Social Media, Influencers, and the Age of Authenticity',
-    description: 'The dominance of social media and the rise of influencer marketing.',
-    keyEvent: 'Brands started shifting budgets to social media platforms, using influencers to authentically connect with consumers.',
-    iconicAd: 'Always\' "Like a Girl" Campaign (2014)',
-    impact: 'This ad challenged gender stereotypes and empowered women, sparking a cultural conversation.',
-    icon: Wifi,
-  },
-  {
-    decade: '2020s',
-    title: 'Personalization, AI, and the Power of Data',
-    description: 'The rise of AI-driven, data-fueled personalized marketing.',
-    keyEvent: 'Brands increasingly used data and AI to create hyper-targeted, personalized ads.',
-    iconicAd: 'Spotify\'s "Wrapped" Campaign',
-    impact: 'Spotify\'s yearly "Wrapped" campaign gave users a personalized summary of their listening habits, transforming private data into a viral phenomenon.',
-    icon: Cpu,
-  },
-];
-
+    {
+      decade: '1960s',
+      title: 'The Birth of the Creative Revolution',
+      description: 'The rise of creative-driven advertising, focusing on wit and storytelling.',
+      keyEvent: 'Madison Avenue agencies changed the landscape by prioritizing creativity over hard-selling tactics.',
+      iconicAd: 'Volkswagen\'s "Think Small" (1960)',
+      impact: 'This minimalist ad revolutionized car advertising by emphasizing simplicity and irony.',
+      icon: () => <FontAwesomeIcon icon={faPenNib} />,
+      image: img1960s
+    },
+    {
+      decade: '1970s',
+      title: 'The Power of Branding',
+      description: 'A shift from selling products to building brand identities.',
+      keyEvent: 'Brands began focusing on emotional connections and lifestyle imagery.',
+      iconicAd: 'Coca-Cola\'s "I\'d Like to Buy the World a Coke" (1971)',
+      impact: 'This ad showcased a message of unity and peace, associating Coca-Cola with positive, uplifting emotions.',
+      icon: () => <FontAwesomeIcon icon={faTag} />,
+      youtubeVideo: 'https://www.youtube.com/embed/ib-Qiyklq-Q'  // YouTube video link
+    },
+    {
+      decade: '1980s',
+      title: 'Big Budget, Big Ideas, and the Rise of TV Commercials',
+      description: 'Television became the dominant medium for advertising.',
+      keyEvent: 'Increased ad budgets led to more dramatic, story-driven TV commercials.',
+      iconicAd: 'Apple\'s "1984" Super Bowl Ad (1984)',
+      impact: 'Introduced the Macintosh computer and portrayed Apple as a rebel challenging the status quo.',
+      icon: () => <FontAwesomeIcon icon={faTv} />,
+    },
+    {
+      decade: '1990s',
+      title: 'Digital Beginnings and Shock Advertising',
+      description: 'The rise of early digital ads and controversial "shock" advertising.',
+      keyEvent: 'The beginning of digital advertising with the rise of the internet.',
+      iconicAd: 'Benetton\'s "Unhate" Campaign',
+      impact: 'Benetton became known for its shocking ads that dealt with social issues, aiming to provoke conversations.',
+      icon: () => <FontAwesomeIcon icon={faGlobe} />,
+    },
+    {
+      decade: '2000s',
+      title: 'The Rise of Digital and Guerrilla Marketing',
+      description: 'The explosion of digital marketing and guerrilla tactics.',
+      keyEvent: 'Brands increasingly invested in online campaigns, viral marketing, and guerrilla strategies.',
+      iconicAd: 'Burger King\'s "Subservient Chicken" (2004)',
+      impact: 'This online campaign allowed users to "control" a chicken via a website, pioneering interactive and viral marketing.',
+      icon: () => <FontAwesomeIcon icon={faNetworkWired} />,
+    },
+    {
+      decade: '2010s',
+      title: 'Social Media, Influencers, and the Age of Authenticity',
+      description: 'The dominance of social media and the rise of influencer marketing.',
+      keyEvent: 'Brands started shifting budgets to social media platforms, using influencers to authentically connect with consumers.',
+      iconicAd: 'Always\' "Like a Girl" Campaign (2014)',
+      impact: 'This ad challenged gender stereotypes and empowered women, sparking a cultural conversation.',
+      icon: () => <FontAwesomeIcon icon={faCamera} />,
+    },
+    {
+      decade: '2020s',
+      title: 'Personalization, AI, and the Power of Data',
+      description: 'The rise of AI-driven, data-fueled personalized marketing.',
+      keyEvent: 'Brands increasingly used data and AI to create hyper-targeted, personalized ads.',
+      iconicAd: 'Spotify\'s "Wrapped" Campaign',
+      impact: 'Spotify\'s yearly "Wrapped" campaign gave users a personalized summary of their listening habits, transforming private data into a viral phenomenon.',
+      icon: () => <FontAwesomeIcon icon={faRobot} />,
+    },
+  ];
+  
 const ImageModal = ({ isOpen, onClose, imageSrc, alt }) => {
     if (!isOpen) return null;
   
@@ -159,33 +163,42 @@ const ImageModal = ({ isOpen, onClose, imageSrc, alt }) => {
   <div className="flex flex-col md:flex-row space-y-6 md:space-y-0 md:space-x-6">
     {/* Left-hand column for text content */}
     <div className="flex-1">
-      <h3 className="text-2xl font-semibold text-gray-700">{currentEra.title}</h3>
-      <p className="text-gray-600">{currentEra.description}</p>
-      <div>
-        <h4 className="text-xl font-semibold text-gray-700 mb-2">Key Event:</h4>
-        <p className="text-gray-600">{currentEra.keyEvent}</p>
-      </div>
-      <div>
-        <h4 className="text-xl font-semibold text-gray-700 mb-2">Iconic Ad:</h4>
-        <p className="text-gray-600">{currentEra.iconicAd}</p>
-      </div>
-      <div>
-        <h4 className="text-xl font-semibold text-gray-700 mb-2">Impact:</h4>
-        <p className="text-gray-600">{currentEra.impact}</p>
-      </div>
+    <h3 className="text-2xl font-semibold text-gray-700">{currentEra.title}</h3>
+    <p className="text-gray-600">{currentEra.description}</p>
+    <div>
+      <h4 className="text-xl font-semibold text-gray-700 mb-2">Key Event:</h4>
+      <p className="text-gray-600">{currentEra.keyEvent}</p>
     </div>
+    <div>
+      <h4 className="text-xl font-semibold text-gray-700 mb-2">Iconic Ad:</h4>
+      <p className="text-gray-600">{currentEra.iconicAd}</p>
+    </div>
+    <div>
+      <h4 className="text-xl font-semibold text-gray-700 mb-2">Impact:</h4>
+      <p className="text-gray-600">{currentEra.impact}</p>
+    </div>
+  </div>
 
-    {/* Right-hand column for the image */}
-    <div
-      className="flex justify-center items-center bg-gray-100 p-4 rounded-lg cursor-pointer flex-shrink-0" 
-      style={{ width: '300px' }}  // Adjust width as needed
-      onClick={() => setIsModalOpen(true)}
-    >
+    {/* Right-hand column for the image or video */}
+    <div className="flex justify-center items-center bg-gray-100 p-4 rounded-lg flex-shrink-0">
+    {currentEra.youtubeVideo ? (
+      <iframe
+        width="400"
+        height="225"
+        src={currentEra.youtubeVideo}
+        title={`Iconic ad for the ${currentEra.decade}`}
+        frameBorder="0"
+        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+        allowFullScreen
+      ></iframe>
+    ) : (
       <img
         src={currentEra.image}
         alt={`Advertising in the ${currentEra.decade}`}
         className="max-w-full max-h-[280px] object-contain"
       />
+    )}
+
     </div>
   </div>
 </div>
