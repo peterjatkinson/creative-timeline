@@ -2,3 +2,12 @@
 @import 'tailwindcss/components';
 @import 'tailwindcss/utilities';
 
+body {
+  font-family: 'Poppins', sans-serif; /* Main font */
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: 'Montserrat', sans-serif; /* Headings font */
+  margin-top: 0.5rem; /* Adjust the value to your liking */
+
+}
