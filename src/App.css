@@ -36,3 +36,37 @@
     transform: rotate(360deg);
   }
 }
+
+.video-container {
+  position: relative;
+  padding-bottom: 56.25%; /* Aspect ratio 16:9 */
+  height: 0;
+  overflow: hidden;
+  width: 100%; /* Ensure it takes up the full width of the container */
+  background: #000; /* Optional background color */
+}
+
+.video-container iframe {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%; /* Make sure it covers the full width of the container */
+  height: 100%; /* Maintain height based on width to ensure aspect ratio */
+}
+
+/* For larger screens, keep the max width but also ensure it is centered */
+@media (min-width: 768px) {
+  .video-container {
+    max-width: 100%; /* Remove max-width limitation for larger screens */
+    margin: 0 auto; /* Center the video if necessary */
+  }
+}
+
+/* Hide the buttons on mobile view */
+@media (max-width: 768px) {
+  .timeline-buttons {
+    display: none;
+  }
+}
+
+

@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Brain, Layers, Wifi, Radio, Smartphone, Cpu, ChevronLeft, ChevronRight, X } from 'lucide-react';
+import { ChevronLeft, ChevronRight, X } from 'lucide-react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPenNib, faNetworkWired, faGlobe, faTv, faTag, faCamera, faRobot } from '@fortawesome/free-solid-svg-icons';
 
@@ -122,7 +122,7 @@ const AdvertisingTimeline = () => {
     return (
         <div className="min-h-screen bg-gradient-to-br from-yellow-100 to-orange-200 flex flex-col items-center justify-start p-8">
             <h1 className="text-4xl font-bold text-gray-800 mb-12">Evolution of Advertising</h1>
-            <div className="flex flex-wrap justify-center gap-6 mb-8">
+            <div className="hidden md:flex md:flex-wrap md:justify-center gap-6 mb-8">
                 {timelineData.map((era, index) => (
                     <button
                         key={era.decade}
@@ -178,15 +178,16 @@ const AdvertisingTimeline = () => {
                         <div className="flex justify-center items-center bg-gray-100 p-4 rounded-lg flex-shrink-0">
                             {currentEra.youtubeVideo ? (
                                 // Display YouTube video for decades that have youtubeVideo property
-                                <iframe
-                                    width="400"
-                                    height="225"
-                                    src={currentEra.youtubeVideo}
-                                    title={`Example ad for the ${currentEra.decade}`}
-                                    frameBorder="0"
-                                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                                    allowFullScreen
-                                ></iframe>
+                                <div className="video-container">
+                                    <iframe
+                                        src={currentEra.youtubeVideo}
+                                        title={`Example ad for the ${currentEra.decade}`}
+                                        frameBorder="0"
+                                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                                        allowFullScreen
+                                    ></iframe>
+                                </div>
+
                             ) : (
                                 // Trigger modal for decades with images
                                 <div
