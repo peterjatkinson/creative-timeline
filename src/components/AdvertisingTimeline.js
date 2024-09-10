@@ -159,8 +159,8 @@ const AdvertisingTimeline = () => {
                     </div>
 
                     {/* Wrap content and image in a flex container for side-by-side layout */}
-                    <div className="flex flex-col md:flex-row space-y-6 md:space-y-0 md:space-x-6">
-                        {/* Left-hand column for text content */}
+                    <div className="flex flex-col lg:flex-row space-y-6 lg:space-y-0 lg:space-x-6">
+                    {/* Left-hand column for text content */}
                         <div className="flex-1">
                             <h3 className="text-2xl font-semibold text-gray-700">{currentEra.title}</h3>
                             <p className="text-gray-600">{currentEra.description}</p>
@@ -175,19 +175,21 @@ const AdvertisingTimeline = () => {
                         </div>
 
                         {/* Right-hand column for the image or video */}
-                        <div className="flex justify-center items-center bg-gray-100 p-4 rounded-lg flex-shrink-0">
+                        <div className="flex justify-center items-center bg-gray-100 p-4 rounded-lg flex-shrink-0 w-full md:w-1/3 lg:w-1/2">
                             {currentEra.youtubeVideo ? (
                                 // Display YouTube video for decades that have youtubeVideo property
-                                <div className="video-container">
-                                    <iframe
-                                        src={currentEra.youtubeVideo}
-                                        title={`Example ad for the ${currentEra.decade}`}
-                                        frameBorder="0"
-                                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                                        allowFullScreen
-                                    ></iframe>
-                                </div>
-
+                                <div className="video-container w-full max-w-md lg:max-w-lg xl:max-w-xl">
+                                    <div className="relative pb-[56.25%] h-0">
+                                        <iframe
+                                            className="absolute top-0 left-0 w-full h-full"
+                                            src={currentEra.youtubeVideo}
+                                            title={`Example ad for the ${currentEra.decade}`}
+                                            frameBorder="0"
+                                            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                                            allowFullScreen
+                                        ></iframe>
+                                    </div>
+                            </div>
                             ) : (
                                 // Trigger modal for decades with images
                                 <div
