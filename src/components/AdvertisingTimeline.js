@@ -2,6 +2,8 @@ import React, { useState } from 'react';
 import { ChevronLeft, ChevronRight, X } from 'lucide-react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPenNib, faNetworkWired, faGlobe, faTv, faTag, faCamera, faRobot } from '@fortawesome/free-solid-svg-icons';
+import { useSwipeable } from 'react-swipeable';
+
 
 //Images
 import img1960s from '../images/1960sad.webp';
@@ -117,10 +119,18 @@ const AdvertisingTimeline = () => {
         setCurrentIndex((prevIndex) => (prevIndex < timelineData.length - 1 ? prevIndex + 1 : prevIndex));
     };
 
+    const handlers = useSwipeable({
+        onSwipedLeft: handleNext,
+        onSwipedRight: handlePrev,
+        preventDefaultTouchmoveEvent: true,
+        trackMouse: false, // This disables mouse tracking
+        trackTouch: true   // This ensures touch is still tracked
+    });
+
     const currentEra = timelineData[currentIndex];
 
     return (
-        <div className="min-h-screen bg-gradient-to-br from-yellow-100 to-orange-200 flex flex-col items-center justify-start p-8">
+        <div {...handlers} className="min-h-screen bg-gradient-to-br from-yellow-100 to-orange-200 flex flex-col items-center justify-start p-8">
             <h1 className="text-4xl font-bold text-gray-800 mb-12">Evolution of Advertising</h1>
             <div className="hidden md:flex md:flex-wrap md:justify-center gap-6 mb-8">
                 {timelineData.map((era, index) => (
