@@ -131,7 +131,7 @@ const AdvertisingTimeline = () => {
 
     return (
         <div {...handlers} className="min-h-screen bg-gradient-to-br from-yellow-100 to-orange-200 flex flex-col items-center justify-start p-8">
-            <h1 className="text-4xl font-bold text-gray-800 mb-12">Evolution of Advertising</h1>
+            <h1 className="text-4xl font-bold text-gray-800 mb-12">The evolution of creativity through the decades</h1>
             <div className="hidden md:flex md:flex-wrap md:justify-center gap-6 mb-8">
                 {timelineData.map((era, index) => (
                     <button
