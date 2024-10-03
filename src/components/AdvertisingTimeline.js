@@ -1,4 +1,4 @@
-import React, { useState, useRef } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import { ChevronLeft, ChevronRight, X } from 'lucide-react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPenNib, faNetworkWired, faGlobe, faTv, faTag, faCamera, faRobot } from '@fortawesome/free-solid-svg-icons';
@@ -124,6 +124,8 @@ const AdvertisingTimeline = () => {
     const [currentIndex, setCurrentIndex] = useState(0);
     const [isModalOpen, setIsModalOpen] = useState(false);
     const buttonRef = useRef(null);  // Ref to track the button that opens the modal
+    const contentRef = useRef(null); // Ref to track the main content area for focus
+    const nextButtonRef = useRef(null); // Ref for "Next Decade" button
 
     const handlePrev = () => {
         setCurrentIndex((prevIndex) => (prevIndex > 0 ? prevIndex - 1 : prevIndex));
@@ -148,6 +150,20 @@ const AdvertisingTimeline = () => {
 
     const currentEra = timelineData[currentIndex];
 
+    // Move focus to the content area when the currentIndex changes
+    useEffect(() => {
+        if (contentRef.current) {
+            contentRef.current.focus();
+        }
+    }, [currentIndex]);
+
+    // Function to move focus to "Next Decade" button when content is fully navigated
+    const handleContentEnd = () => {
+        if (nextButtonRef.current) {
+            nextButtonRef.current.focus(); // Move focus to the "Next Decade" button
+        }
+    };
+
     return (
         <div
             {...handlers}
@@ -155,108 +171,144 @@ const AdvertisingTimeline = () => {
             tabIndex="0"
             className="min-h-screen bg-gradient-to-br from-yellow-100 to-orange-200 flex flex-col items-center justify-start p-8"
         >
-            <h1 className="text-4xl font-bold text-gray-800 mb-12">The evolution of creativity through the decades</h1>
-
-            <div className="hidden md:flex md:flex-wrap md:justify-center gap-6 mb-8">
-                {timelineData.map((era, index) => (
-                    <button
-                        key={era.decade}
-                        className={`w-24 h-24 bg-white rounded-xl shadow-lg flex flex-col items-center justify-center transition-all duration-300 ${index === currentIndex ? 'ring-4 ring-blue-500' : 'hover:bg-blue-200 hover:text-white hover:scale-105'}`}
-                        onClick={() => setCurrentIndex(index)}
-                        aria-label={`Select ${era.decade}`}
-                    >
-                        <era.icon className={`w-8 h-8 ${index === currentIndex ? 'text-blue-500' : 'text-gray-700'}`} />
-                        <span className="mt-2 text-sm font-semibold text-gray-800">{era.decade}</span>
-                    </button>
-                ))}
-            </div>
-
-            <div className="relative p-1 rounded-lg bg-blue-300">
-                <div className="p-6 bg-white rounded-lg shadow-xl max-w-4xl w-full border-4 border-dashed border-transparent bg-clip-padding">
-                    <div className="flex justify-between items-center mb-6">
+            {/* Header */}
+            <header>
+                <h1 className="text-4xl font-bold text-gray-800 mb-12">
+                    The evolution of creativity through the decades
+                </h1>
+            </header>
+    
+            {/* Navigation for decades */}
+            <nav aria-label="Decade navigation">
+                <div className="hidden md:flex md:flex-wrap md:justify-center gap-6 mb-8">
+                    {timelineData.map((era, index) => (
                         <button
-                            onClick={handlePrev}
-                            disabled={currentIndex === 0}
-                            className={`p-2 rounded-full transition-colors duration-300 ${currentIndex === 0 ? 'bg-gray-200 text-gray-400' : 'bg-gray-200 hover:bg-blue-500 hover:text-white'}`}
-                            aria-label="Previous decade"
+                            key={era.decade}
+                            className={`w-24 h-24 bg-white rounded-xl shadow-lg flex flex-col items-center justify-center transition-all duration-300 ${index === currentIndex ? 'ring-4 ring-blue-500' : 'hover:bg-blue-200 hover:text-white hover:scale-105'}`}
+                            onClick={() => setCurrentIndex(index)}
+                            aria-label={`Select ${era.decade}`}
                         >
-                            <ChevronLeft className="w-6 h-6" />
+                            <era.icon className={`w-8 h-8 ${index === currentIndex ? 'text-blue-500' : 'text-gray-700'}`} />
+                            <span className="mt-2 text-sm font-semibold text-gray-800">{era.decade}</span>
                         </button>
-
-                        <h2 className="text-3xl font-bold text-center text-gray-800" aria-live="polite">{currentEra.decade}</h2>
-
-                        <button
-                            onClick={handleNext}
-                            disabled={currentIndex === timelineData.length - 1}
-                            className={`p-2 rounded-full transition-colors duration-300 ${currentIndex === timelineData.length - 1 ? 'bg-gray-200 text-gray-400' : 'bg-gray-200 hover:bg-blue-500 hover:text-white'}`}
-                            aria-label="Next decade"
-                        >
-                            <ChevronRight className="w-6 h-6" />
-                        </button>
-                    </div>
-
-                    <div className="flex flex-col md:flex-row md:space-x-6 w-full max-w-4xl mx-auto">
-                        <div className="w-full md:w-1/2 lg:w-1/2 mb-6 md:mb-0">
-                            <h3 className="text-2xl font-semibold text-gray-700">{currentEra.title}</h3>
-                            <p className="text-gray-600">{currentEra.description}</p>
-                            <div>
-                                <h4 className="text-xl font-semibold text-gray-700 mb-2">Example ad:</h4>
-                                <p className="text-gray-600">{currentEra.exampleAd}</p>
-                            </div>
-                            <div>
-                                <h4 className="text-xl font-semibold text-gray-700 mb-2">Impact:</h4>
-                                <p className="text-gray-600">{currentEra.impact}</p>
-                            </div>
-                        </div>
-
-                        <div className="w-full md:w-1/2 lg:w-1/2 flex justify-center items-center bg-gray-100 p-4 rounded-lg">
-                            {currentEra.youtubeVideo ? (
-                                <div className="video-container w-full">
-                                    <div className="relative pb-[56.25%] h-0">
-                                        <iframe
-                                            className="absolute top-0 left-0 w-full h-full"
-                                            src={currentEra.youtubeVideo}
-                                            title={currentEra.videoTitle}  // Dynamically set the title for each video
-                                            frameBorder="0"
-                                            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                                            allowFullScreen
-                                        ></iframe>
-                                    </div>
-                                </div>
-                            ) : (
-                                <div
-                                    className="cursor-pointer w-full h-full flex justify-center items-center"
-                                    onClick={() => {
-                                        setIsModalOpen(true);
-                                        buttonRef.current?.focus();  // Focus back to button
-                                    }}
-                                    ref={buttonRef}  // Ref for focus management
-                                >
-                                    <img
-                                        src={currentEra.image}
-                                        alt={currentEra.alt}
-                                        className="max-w-full max-h-[280px] object-contain"
-                                    />
-                                </div>
-                            )}
-                        </div>
-
-                        {currentEra.image && (
-                            <ImageModal
-                                isOpen={isModalOpen}
-                                onClose={() => {
-                                    setIsModalOpen(false);
-                                    buttonRef.current?.focus();  // Return focus to button
-                                }}
-                                imageSrc={currentEra.image}
-                                alt={`Full size advertising in the ${currentEra.decade}`}
-                            />
-                        )}
-                    </div>
+                    ))}
                 </div>
-            </div>
+            </nav>
+    
+            {/* Main content */}
+            <main>
+                <article>
+                    <section className="relative p-1 rounded-lg bg-blue-300">
+                        <div
+                            className="p-6 bg-white rounded-lg shadow-xl max-w-4xl w-full border-4 border-dashed border-transparent bg-clip-padding"
+                            ref={contentRef}
+                            tabIndex="-1"
+                        >
+                            {/* Previous and Next Decade Navigation */}
+                            <div className="flex justify-between items-center mb-6">
+                                {/* Previous Decade Button */}
+                                <button
+                                    onClick={handlePrev}
+                                    disabled={currentIndex === 0}
+                                    className={`p-2 rounded-full transition-colors duration-300 ${currentIndex === 0 ? 'bg-gray-200 text-gray-400' : 'bg-gray-200 hover:bg-blue-500 hover:text-white'}`}
+                                    aria-label={`Go to the previous decade, ${timelineData[currentIndex - 1]?.decade || 'disabled'}`}
+                                >
+                                    <ChevronLeft className="w-6 h-6" />
+                                </button>
+    
+                                <h2
+                                    className="text-3xl font-bold text-center text-gray-800"
+                                    aria-live="polite"
+                                    id={`heading-${currentIndex}`}
+                                >
+                                    {currentEra.decade}
+                                </h2>
+    
+                                {/* Next Decade Button */}
+                                <button
+                                    onClick={handleNext}
+                                    disabled={currentIndex === timelineData.length - 1}
+                                    className={`p-2 rounded-full transition-colors duration-300 ${currentIndex === timelineData.length - 1 ? 'bg-gray-200 text-gray-400' : 'bg-gray-200 hover:bg-blue-500 hover:text-white'}`}
+                                    aria-label={`Go to the next decade, ${timelineData[currentIndex + 1]?.decade || 'disabled'}`}
+                                    ref={nextButtonRef}
+                                >
+                                    <ChevronRight className="w-6 h-6" />
+                                </button>
+                            </div>
+    
+                            <div className="flex flex-col md:flex-row md:space-x-6 w-full max-w-4xl mx-auto">
+                                {/* Textual Content */}
+                                <article className="w-full md:w-1/2 lg:w-1/2 mb-6 md:mb-0">
+                                    <h3 className="text-2xl font-semibold text-gray-700">{currentEra.title}</h3>
+                                    <p className="text-gray-600">{currentEra.description}</p>
+                                    <div>
+                                        <h4 className="text-xl font-semibold text-gray-700 mb-2">Example ad:</h4>
+                                        <p className="text-gray-600">{currentEra.exampleAd}</p>
+                                    </div>
+                                    <div>
+                                        <h4 className="text-xl font-semibold text-gray-700 mb-2">Impact:</h4>
+                                        <p className="text-gray-600">{currentEra.impact}</p>
+                                    </div>
+                                </article>
+    
+                                {/* Video or Image */}
+                                <aside className="w-full md:w-1/2 lg:w-1/2 flex justify-center items-center bg-gray-100 p-4 rounded-lg">
+                                    {currentEra.youtubeVideo ? (
+                                        <div className="video-container w-full">
+                                            <div className="relative pb-[56.25%] h-0">
+                                                <iframe
+                                                    className="absolute top-0 left-0 w-full h-full"
+                                                    src={currentEra.youtubeVideo}
+                                                    title={currentEra.videoTitle}
+                                                    frameBorder="0"
+                                                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                                                    allowFullScreen
+                                                ></iframe>
+                                            </div>
+                                        </div>
+                                    ) : (
+                                        <div
+                                            className="cursor-pointer w-full h-full flex justify-center items-center"
+                                            onClick={() => {
+                                                setIsModalOpen(true);
+                                                buttonRef.current?.focus();  // Focus back to button
+                                            }}
+                                            ref={buttonRef}
+                                        >
+                                            <img
+                                                src={currentEra.image}
+                                                alt={currentEra.alt}
+                                                className="max-w-full max-h-[280px] object-contain"
+                                            />
+                                        </div>
+                                    )}
+                                </aside>
+    
+                                {currentEra.image && (
+                                    <ImageModal
+                                        isOpen={isModalOpen}
+                                        onClose={() => {
+                                            setIsModalOpen(false);
+                                            buttonRef.current?.focus();
+                                        }}
+                                        imageSrc={currentEra.image}
+                                        alt={`Full size advertising in the ${currentEra.decade}`}
+                                    />
+                                )}
+                            </div>
+    
+                            {/* Invisible button to move focus when content navigation ends */}
+                            <button onClick={handleContentEnd} hidden>
+                                Focus Next Decade
+                            </button>
+                        </div>
+                    </section>
+                </article>
+            </main>
         </div>
     );
+    
 };
 
 export default AdvertisingTimeline;
+
