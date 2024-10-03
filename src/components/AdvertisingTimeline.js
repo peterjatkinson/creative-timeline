@@ -252,49 +252,54 @@ const AdvertisingTimeline = () => {
                                 </article>
     
                                 {/* Video or Image */}
+                                {/* Video or Image */}
                                 <aside className="w-full md:w-1/2 lg:w-1/2 flex justify-center items-center bg-gray-100 p-4 rounded-lg">
-                                    {currentEra.youtubeVideo ? (
-                                        <div className="video-container w-full">
-                                            <div className="relative pb-[56.25%] h-0">
-                                                <iframe
-                                                    className="absolute top-0 left-0 w-full h-full"
-                                                    src={currentEra.youtubeVideo}
-                                                    title={currentEra.videoTitle}
-                                                    frameBorder="0"
-                                                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                                                    allowFullScreen
-                                                ></iframe>
-                                            </div>
-                                        </div>
-                                    ) : (
-                                        <div
-                                            className="cursor-pointer w-full h-full flex justify-center items-center"
-                                            onClick={() => {
-                                                setIsModalOpen(true);
-                                                buttonRef.current?.focus();  // Focus back to button
-                                            }}
-                                            ref={buttonRef}
-                                        >
-                                            <img
-                                                src={currentEra.image}
-                                                alt={currentEra.alt}
-                                                className="max-w-full max-h-[280px] object-contain"
-                                            />
-                                        </div>
-                                    )}
-                                </aside>
-    
-                                {currentEra.image && (
-                                    <ImageModal
-                                        isOpen={isModalOpen}
-                                        onClose={() => {
-                                            setIsModalOpen(false);
-                                            buttonRef.current?.focus();
-                                        }}
-                                        imageSrc={currentEra.image}
-                                        alt={`Full size advertising in the ${currentEra.decade}`}
-                                    />
-                                )}
+    {currentEra.youtubeVideo ? (
+        <div className="video-container w-full">
+            <div className="relative pb-[56.25%] h-0">
+                <iframe
+                    className="absolute top-0 left-0 w-full h-full"
+                    src={currentEra.youtubeVideo}
+                    title={currentEra.videoTitle}
+                    frameBorder="0"
+                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                    allowFullScreen
+                ></iframe>
+            </div>
+        </div>
+    ) : (
+        <div
+            className="cursor-pointer w-full h-full flex justify-center items-center"
+            onClick={() => {
+                setIsModalOpen(true);
+                buttonRef.current?.focus();  // Focus back to button
+            }}
+            ref={buttonRef}
+            role="presentation"  /* Marks this as non-interactive for screen readers */
+        >
+            <img
+                src={currentEra.image}
+                alt={currentEra.alt}  /* Alt text still accessible to screen readers */
+                className="max-w-full max-h-[280px] object-contain"
+            />
+        </div>
+    )}
+</aside>
+
+{currentEra.image && (
+    <ImageModal
+        isOpen={isModalOpen}
+        onClose={() => {
+            setIsModalOpen(false);
+            buttonRef.current?.focus();
+        }}
+        imageSrc={currentEra.image}
+        alt={`Full size advertising in the ${currentEra.decade}`}
+        aria-hidden="true"  /* Hides the modal itself from screen readers */
+    />
+)}
+
+
                             </div>
     
                             {/* Invisible button to move focus when content navigation ends */}
