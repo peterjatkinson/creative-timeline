@@ -164,8 +164,6 @@ const AdvertisingTimeline = () => {
             className="min-h-screen bg-gradient-to-br from-yellow-100 to-orange-200 flex flex-col items-center justify-start p-8"
             aria-labelledby="timeline-heading"
         >
-            <a href="#decade-navigation" className="sr-only focus:not-sr-only">Skip to decade navigation</a>
-            <a href="#decade-content" className="sr-only focus:not-sr-only">Skip to decade content</a>
 
             <header>
                 <h1 id="timeline-heading" className="text-3xl font-bold text-gray-800 mb-12">
