@@ -71,8 +71,7 @@ const timelineData = [
         icon: () => <FontAwesomeIcon icon={faCamera} />,
         image: img2010s,
         alt: 'Daniel Wellington’s Instagram influencer campaign in the 2010s'
-
-        },
+    },
     {
         decade: '2020s',
         title: 'Personalisation, AI and the power of data',
@@ -123,16 +122,24 @@ const ImageModal = ({ isOpen, onClose, imageSrc, alt }) => {
 const AdvertisingTimeline = () => {
     const [currentIndex, setCurrentIndex] = useState(0);
     const [isModalOpen, setIsModalOpen] = useState(false);
-    const buttonRef = useRef(null);  // Ref to track the button that opens the modal
-    const contentRef = useRef(null); // Ref to track the main content area for focus
-    const nextButtonRef = useRef(null); // Ref for "Next Decade" button
+    const [hasInteracted, setHasInteracted] = useState(false);  // New state to track user interaction
+    const buttonRef = useRef(null);
+    const contentRef = useRef(null);
+    const nextButtonRef = useRef(null);
 
     const handlePrev = () => {
+        setHasInteracted(true);  // Set interaction to true on navigation
         setCurrentIndex((prevIndex) => (prevIndex > 0 ? prevIndex - 1 : prevIndex));
     };
 
     const handleNext = () => {
+        setHasInteracted(true);  // Set interaction to true on navigation
         setCurrentIndex((prevIndex) => (prevIndex < timelineData.length - 1 ? prevIndex + 1 : prevIndex));
+    };
+
+    const handleDecadeSelect = (index) => {
+        setHasInteracted(true);  // Set interaction to true on button click
+        setCurrentIndex(index);
     };
 
     const handleKeyDown = (e) => {
@@ -150,17 +157,16 @@ const AdvertisingTimeline = () => {
 
     const currentEra = timelineData[currentIndex];
 
-    // Move focus to the content area when the currentIndex changes
+    // Update focus only after user interaction
     useEffect(() => {
-        if (contentRef.current) {
+        if (hasInteracted && contentRef.current) {
             contentRef.current.focus();
         }
-    }, [currentIndex]);
+    }, [currentIndex, hasInteracted]);
 
-    // Function to move focus to "Next Decade" button when content is fully navigated
     const handleContentEnd = () => {
         if (nextButtonRef.current) {
-            nextButtonRef.current.focus(); // Move focus to the "Next Decade" button
+            nextButtonRef.current.focus();
         }
     };
 
@@ -171,21 +177,22 @@ const AdvertisingTimeline = () => {
             tabIndex="0"
             className="min-h-screen bg-gradient-to-br from-yellow-100 to-orange-200 flex flex-col items-center justify-start p-8"
         >
-            {/* Header */}
             <header>
                 <h1 className="text-4xl font-bold text-gray-800 mb-12">
                     The evolution of creativity through the decades
                 </h1>
+                <p aria-live="polite" className="sr-only">
+                    Use the left and right arrow keys to navigate between decades.
+                </p>
             </header>
     
-            {/* Navigation for decades */}
             <nav aria-label="Decade navigation">
                 <div className="hidden md:flex md:flex-wrap md:justify-center gap-6 mb-8">
                     {timelineData.map((era, index) => (
                         <button
                             key={era.decade}
                             className={`w-24 h-24 bg-white rounded-xl shadow-lg flex flex-col items-center justify-center transition-all duration-300 ${index === currentIndex ? 'ring-4 ring-blue-500' : 'hover:bg-blue-200 hover:text-white hover:scale-105'}`}
-                            onClick={() => setCurrentIndex(index)}
+                            onClick={() => handleDecadeSelect(index)}
                             aria-label={`Select ${era.decade}`}
                         >
                             <era.icon className={`w-8 h-8 ${index === currentIndex ? 'text-blue-500' : 'text-gray-700'}`} />
@@ -195,7 +202,6 @@ const AdvertisingTimeline = () => {
                 </div>
             </nav>
     
-            {/* Main content */}
             <main>
                 <article>
                     <section className="relative p-1 rounded-lg bg-blue-300">
@@ -204,9 +210,7 @@ const AdvertisingTimeline = () => {
                             ref={contentRef}
                             tabIndex="-1"
                         >
-                            {/* Previous and Next Decade Navigation */}
                             <div className="flex justify-between items-center mb-6">
-                                {/* Previous Decade Button */}
                                 <button
                                     onClick={handlePrev}
                                     disabled={currentIndex === 0}
@@ -224,7 +228,6 @@ const AdvertisingTimeline = () => {
                                     {currentEra.decade}
                                 </h2>
     
-                                {/* Next Decade Button */}
                                 <button
                                     onClick={handleNext}
                                     disabled={currentIndex === timelineData.length - 1}
@@ -237,7 +240,6 @@ const AdvertisingTimeline = () => {
                             </div>
     
                             <div className="flex flex-col md:flex-row md:space-x-6 w-full max-w-4xl mx-auto">
-                                {/* Textual Content */}
                                 <article className="w-full md:w-1/2 lg:w-1/2 mb-6 md:mb-0">
                                     <h3 className="text-2xl font-semibold text-gray-700">{currentEra.title}</h3>
                                     <p className="text-gray-600">{currentEra.description}</p>
@@ -251,69 +253,60 @@ const AdvertisingTimeline = () => {
                                     </div>
                                 </article>
     
-                                {/* Video or Image */}
-                                {/* Video or Image */}
                                 <aside className="w-full md:w-1/2 lg:w-1/2 flex justify-center items-center bg-gray-100 p-4 rounded-lg">
-    {currentEra.youtubeVideo ? (
-        <div className="video-container w-full">
-            <div className="relative pb-[56.25%] h-0">
-                <iframe
-                    className="absolute top-0 left-0 w-full h-full"
-                    src={currentEra.youtubeVideo}
-                    title={currentEra.videoTitle}
-                    frameBorder="0"
-                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                    allowFullScreen
-                ></iframe>
-            </div>
-        </div>
-    ) : (
-        <div
-            className="cursor-pointer w-full h-full flex justify-center items-center"
-            onClick={() => {
-                setIsModalOpen(true);
-                buttonRef.current?.focus();  // Focus back to button
-            }}
-            ref={buttonRef}
-            role="presentation"  /* Marks this as non-interactive for screen readers */
-        >
-            <img
-                src={currentEra.image}
-                alt={currentEra.alt}  /* Alt text still accessible to screen readers */
-                className="max-w-full max-h-[280px] object-contain"
-            />
-        </div>
-    )}
-</aside>
-
-{currentEra.image && (
-    <ImageModal
-        isOpen={isModalOpen}
-        onClose={() => {
-            setIsModalOpen(false);
-            buttonRef.current?.focus();
-        }}
-        imageSrc={currentEra.image}
-        alt={`Full size advertising in the ${currentEra.decade}`}
-        aria-hidden="true"  /* Hides the modal itself from screen readers */
-    />
-)}
-
-
+                                    {currentEra.youtubeVideo ? (
+                                        <div className="video-container w-full">
+                                            <div className="relative pb-[56.25%] h-0">
+                                                <iframe
+                                                    className="absolute top-0 left-0 w-full h-full"
+                                                    src={currentEra.youtubeVideo}
+                                                    title={currentEra.videoTitle}
+                                                    frameBorder="0"
+                                                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                                                    allowFullScreen
+                                                ></iframe>
+                                            </div>
+                                        </div>
+                                    ) : (
+                                        <div
+                                            className="cursor-pointer w-full h-full flex justify-center items-center"
+                                            onClick={() => {
+                                                setIsModalOpen(true);
+                                                buttonRef.current?.focus();
+                                            }}
+                                            ref={buttonRef}
+                                            role="presentation"
+                                        >
+                                            <img
+                                                src={currentEra.image}
+                                                alt={currentEra.alt}
+                                                className="max-w-full max-h-[280px] object-contain"
+                                            />
+                                        </div>
+                                    )}
+                                </aside>
+    
+                                {currentEra.image && (
+                                    <ImageModal
+                                        isOpen={isModalOpen}
+                                        onClose={() => {
+                                            setIsModalOpen(false);
+                                            buttonRef.current?.focus();
+                                        }}
+                                        imageSrc={currentEra.image}
+                                        alt={`Full size advertising in the ${currentEra.decade}`}
+                                        aria-hidden="true"
+                                    />
+                                )}
                             </div>
     
-                            {/* Invisible button to move focus when content navigation ends */}
-                            <button onClick={handleContentEnd} hidden>
-                                Focus Next Decade
-                            </button>
+
                         </div>
                     </section>
                 </article>
             </main>
         </div>
     );
-    
 };
 
 export default AdvertisingTimeline;
-
